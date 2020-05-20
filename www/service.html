@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>N3 Test Page</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <link rel="icon" href="./image/android-chrome-192x192.png" />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <!-- <script type="text/javascript" src="./sif2json_help.js?ver<%=DateTime.Now.Ticks.ToString()%>"></script>
+    <script type="text/javascript" src="./sif2json.js?ver<%=DateTime.Now.Ticks.ToString()%>"></script> -->
+
+    <script type="text/javascript" language="javascript">
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src = "./js/help.js?v=" + (new Date()).getTime();
+        document.head.appendChild(script);  
+    </script>
+
+    <script type="text/javascript" language="javascript">
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src = "./js/test.js?v=" + (new Date()).getTime();
+        document.head.appendChild(script);  
+    </script>
+
+</head>
+
+<body>
+    ---------------------------- n3 sif2json ----------------------------
+    <br>
+    <form>
+        <input type="button" onclick="n3ms_help('sif2json');" value="Help" />
+    </form>
+    <form id="uploadform0">
+        <code>SIF/JSON File:&nbsp;</code>
+        <br>
+        <input type="file" id="selectfile0" name="file">
+        <br>
+        <output id="info0"></output>
+        <input type="submit" id="pub0" value="Upload" disabled />
+        <div id="waiting0" class="waiting" hidden></div>
+    </form>
+    <br>
+    ---------------------------- n3 privacy ----------------------------
+    <br>
+    <form>
+        <input type="button" onclick="n3ms_help('privacy');" value="Help" />
+    </form>
+    <form id="uploadform1">
+        <code>JSON File:&nbsp;</code>
+        <br>
+        <input type="file" id="selectfile1" name="file">
+        <br>
+        <output id="info1"></output>
+        <input type="submit" id="pub1" value="Upload" disabled />
+        <div id="waiting1" class="waiting" hidden></div>
+    </form>
+    <br>
+    ---------------------------- n3 csv2json ----------------------------
+    <br>
+    <form>
+        <input type="button" onclick="n3ms_help('csv2json');" value="Help" />
+    </form>
+    <form id="uploadform2">
+        <code>CSV File:&nbsp;</code>
+        <br>
+        <input type="file" id="selectfile2" name="file">
+        <br>
+        <output id="info2"></output>
+        <input type="submit" id="pub2" value="Upload" disabled />
+        <div id="waiting2" class="waiting" hidden></div>
+    </form>
+    <br>
+</body>
+
+</html>
