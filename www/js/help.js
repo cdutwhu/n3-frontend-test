@@ -25,19 +25,31 @@ function n3ms_help(name) {
             return;
     }
 
-    var url = 'http://' + ip;
+    fetch(
+        'http://' + ip, {
+        method: 'GET',
+        body: null,
+    }
+    ).then((response) => {
+        console.log(response.status);
+        return response.text();
+    }).then((result) => {
+        console.log(result);
+    }).catch((error) => {
+        console.error('Error:', error);
+    });
 
     // -------------------------------------------------
 
-    var xhr = new XMLHttpRequest;
-    xhr.open('GET', url, true);
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) { // 0:UNSENT  1:OPENED  2:HEADERS_RECEIVED  3:LOADING  4:DONE
-            var response = xhr.responseText;
-            console.log(response);
-        }
-    };
-    xhr.send(null);
+    // var xhr = new XMLHttpRequest;
+    // xhr.open('GET', url, true);
+    // xhr.onreadystatechange = function () {
+    //     if (xhr.readyState === 4 && xhr.status === 200) { // 0:UNSENT  1:OPENED  2:HEADERS_RECEIVED  3:LOADING  4:DONE
+    //         var response = xhr.responseText;
+    //         console.log(response);
+    //     }
+    // };
+    // xhr.send(null);
 
     // -------------------------------------------------
 

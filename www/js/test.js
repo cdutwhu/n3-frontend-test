@@ -1,29 +1,31 @@
-var filename;
+// function readable(s) {
+//     return s.replace(/\\u003c/gi, "<").replace(/\\u003e/gi, ">").replace(/\\r\\n/g, "\n").replace(/\\n/g, "\n").replace(/\\"/g, "\"");
+// }
 
-function txt2xml(s) {
-    return s.replace(/\\u003c/gi, "<").replace(/\\u003e/gi, ">").replace(/\\r\\n/g, "\n").replace(/\\n/g, "\n");
-}
+function init(name) {
 
-function select_change(name) {
+    var finput, info, btnSend, uploadform, fname;
 
-    var finput, info, btnSend;
     switch (name) {
-        case "sif2json":
-            finput = $('#selectfile0');
-            info = $('#info0');
-            btnSend = $('#pub0');
+        case "privacy":
+            finput = document.getElementById('selectfile0');
+            info = document.getElementById('info0');
+            btnSend = document.getElementById('pub0');
+            uploadform = document.getElementById("uploadform0");
             break;
 
-        case "privacy":
-            finput = $('#selectfile1');
-            info = $('#info1');
-            btnSend = $('#pub1');
+        case "sif2json":
+            finput = document.getElementById('selectfile1');
+            info = document.getElementById('info1');
+            btnSend = document.getElementById('pub1');
+            uploadform = document.getElementById("uploadform1");
             break;
 
         case "csv2json":
-            finput = $('#selectfile2');
-            info = $('#info2');
-            btnSend = $('#pub2');
+            finput = document.getElementById('selectfile2');
+            info = document.getElementById('info2');
+            btnSend = document.getElementById('pub2');
+            uploadform = document.getElementById("uploadform2");
             break;
 
         default:
@@ -31,7 +33,7 @@ function select_change(name) {
             return;
     }
 
-    finput.change(function (evt) {
+    finput.addEventListener('change', function (evt) {
         var files = evt.target.files; // files is a FileList of File objects. List some properties.
         var output = [];
         for (var i = 0, f; f = files[i]; i++) {
@@ -40,65 +42,50 @@ function select_change(name) {
                 f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
                 '</li>');
         }
-        info.html('<ul>' + output.join('') + '</ul>');
+        info.innerHTML = ('<ul>' + output.join('') + '</ul>');
 
-        filename = finput.val();
-        var disabled;
-        if (name == 'sif2json') {
-            disabled = (!filename || (!filename.endsWith('.xml') && !filename.endsWith('.json')))
-        } else if (name == 'privacy') {
-            disabled = (!filename || (!filename.endsWith('.json')))
-        } else if (name == 'csv2json') {
-            disabled = (!filename || (!filename.endsWith('.csv')))
+        fname = files[0].name;
+        var disabled = !fname;
+        switch (name) {
+            case 'privacy':
+                disabled |= (!fname.endsWith('.json'))
+                break;
+            case 'sif2json':
+                disabled |= (!fname.endsWith('.xml') && !fname.endsWith('.json'))
+                break;
+            case 'csv2json':
+                disabled |= (!fname.endsWith('.csv'))
+                break;
         }
-        btnSend.prop('disabled', disabled);
+        btnSend.disabled = disabled;
     });
-}
 
-function form_submit(name) {
-
-    var uploadform;
-    switch (name) {
-        case "sif2json":
-            uploadform = $("#uploadform0");
-            break;
-
-        case "privacy":
-            uploadform = $("#uploadform1");
-            break;
-
-        case "csv2json":
-            uploadform = $("#uploadform2");
-            break;
-
-        default:
-            alert("need correct service name [privacy, sif2json csv2json]");
-            return;
-    }
-
-    uploadform.on('submit', function (e) {
+    uploadform.addEventListener('submit', function (e) {
         e.preventDefault();  // avoid to execute the actual submit of the form
 
         var ip = location.host;
         var url = '';
-        var file = $('input[type=file]')[0].files[0]
+        var finput;
 
         switch (name) {
+            case "privacy":
+                ip = '192.168.31.233:1323';
+                finput = document.getElementById('selectfile0')
+                break;
+
             case "sif2json":
                 ip = '192.168.31.233:1324';
-                if (filename.endsWith('.xml')) {
+                finput = document.getElementById('selectfile1')
+                if (fname.endsWith('.xml')) {
                     url = 'http://' + ip + '/sif2json/0.1.0'
-                } else if (filename.endsWith('.json')) {
+                } else if (fname.endsWith('.json')) {
                     url = 'http://' + ip + '/json2sif/0.1.0'
                 }
                 break;
 
-            case "privacy":
-                ip = '192.168.31.233:1323';
-                break;
-
             case "csv2json":
                 ip = '192.168.31.233:1325';
+                finput = document.getElementById('selectfile2')
                 break;
 
             default:
@@ -106,25 +93,43 @@ function form_submit(name) {
                 return;
         }
 
+        // -------------------------------------------------
+
+        fetch(
+            url, {
+            method: 'POST',
+            body: finput.files[0],
+        }
+        ).then((response) => {
+            console.log(response.status);
+            return response.json();
+        }).then((result) => {
+            console.log('data:', result.data);
+            console.log('info:', result.info);
+            console.log('error:', result.error);
+        }).catch((error) => {
+            console.error('Error:', error);
+        });
 
         // -------------------------------------------------
 
-        var xhr = new XMLHttpRequest;
-        xhr.open('POST', url, true);
-        // xhr.setRequestHeader("Authorization", "Basic " + btoa("user" + ":" + "user"));
-        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-        xhr.setRequestHeader('X-File-Name', file.name);
-        xhr.setRequestHeader('Content-Type', file.type || 'application/octet-stream');
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) { // 0:UNSENT  1:OPENED  2:HEADERS_RECEIVED  3:LOADING  4:DONE
-                var response = xhr.responseText;
-                response = txt2xml(response);
-                console.log(response);
-            }
-        };
-        xhr.send(file);
+        // var xhr = new XMLHttpRequest;
+        // xhr.open('POST', url, true);
+        // // xhr.setRequestHeader("Authorization", "Basic " + btoa("user" + ":" + "user"));
+        // xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        // xhr.setRequestHeader('X-File-Name', file.name);
+        // xhr.setRequestHeader('Content-Type', file.type || 'application/octet-stream');
+        // xhr.onreadystatechange = function () {
+        //     if (xhr.readyState === 4 && xhr.status === 200) { // 0:UNSENT  1:OPENED  2:HEADERS_RECEIVED  3:LOADING  4:DONE
+        //         var response = xhr.responseText;
+        //         response = readable(response);
+        //         console.log(response);
+        //     }
+        // };
+        // xhr.send(file);
 
         // -------------------------------------------------
+        
         // !!! with "*webkitformboundary*" in the sending body !!! //
 
         // var formdata = new FormData();
@@ -168,14 +173,8 @@ function form_submit(name) {
     });
 }
 
-
 window.onload = function () {
-    select_change("sif2json");
-    form_submit("sif2json");
-
-    select_change("privacy");
-    form_submit("privacy");
-
-    select_change("csv2json");
-    form_submit("csv2json");
+    init("privacy");
+    init("sif2json");
+    init("csv2json");
 }
