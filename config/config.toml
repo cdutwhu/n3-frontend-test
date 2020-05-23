@@ -1,0 +1,7 @@
+Path = "/home/qmiao/go/src/github.com/cdutwhu/n3-frontend-test/config/config.toml"
+LogFile = "./[DATE].log"
+ServiceName = "N3-FRONTEND-TEST"
+
+[WebService]
+  Port = 1320
+  Version = "0.1.0"
