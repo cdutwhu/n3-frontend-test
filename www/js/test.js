@@ -54,7 +54,7 @@ function init(name) {
                 disabled |= (!fname.endsWith('.xml') && !fname.endsWith('.json'))
                 break;
             case 'csv2json':
-                disabled |= (!fname.endsWith('.csv'))
+                disabled |= (!fname.endsWith('.csv') && !fname.endsWith('.json'))
                 break;
         }
         btnSend.disabled = disabled;
@@ -69,12 +69,12 @@ function init(name) {
 
         switch (name) {
             case "privacy":
-                ip = '192.168.31.233:1323';
+                ip = '192.168.31.168:1323';
                 finput = document.getElementById('selectfile0')
                 break;
 
             case "sif2json":
-                ip = '192.168.31.233:1324';
+                ip = '192.168.31.168:1324';
                 finput = document.getElementById('selectfile1')
                 if (fname.endsWith('.xml')) {
                     url = 'http://' + ip + '/sif2json/0.1.0'
@@ -84,8 +84,13 @@ function init(name) {
                 break;
 
             case "csv2json":
-                ip = '192.168.31.233:1325';
+                ip = '192.168.31.168:1325';
                 finput = document.getElementById('selectfile2')
+                if (fname.endsWith('.csv')) {
+                    url = 'http://' + ip + '/csv2json/0.1.0'
+                } else if (fname.endsWith('.json')) {
+                    url = 'http://' + ip + '/json2csv/0.1.0'
+                }
                 break;
 
             default:

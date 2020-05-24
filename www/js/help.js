@@ -12,13 +12,13 @@ function n3ms_help(name) {
     var ip = location.host;
     switch (name) {
         case "privacy":
-            ip = '192.168.31.233:1323';
+            ip = '192.168.31.168:1323';
             break;
         case "sif2json":
-            ip = '192.168.31.233:1324';
+            ip = '192.168.31.168:1324';
             break;
         case "csv2json":
-            ip = '192.168.31.233:1325';
+            ip = '192.168.31.168:1325';
             break;
         default:
             alert("need correct service name [privacy, sif2json csv2json]");
