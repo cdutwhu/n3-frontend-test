@@ -8,4 +8,6 @@ func TestLoad(t *testing.T) {
 	fPln(cfg.LogFile)
 	fPln(cfg.ServiceName)
 	fPln(cfg.WebService)
+	fPln(cfg.Route)
+	fPln(cfg.ServiceIP)
 }

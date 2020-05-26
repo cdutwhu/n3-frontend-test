@@ -71,6 +71,7 @@ function init(name) {
             case "privacy":
                 ip = '192.168.31.168:1323';
                 finput = document.getElementById('selectfile0')
+                url = 'http://' + ip + '/policy-service/0.1.0/enforce'
                 break;
 
             case "sif2json":

@@ -17,6 +17,17 @@ type Config struct {
 		Port    int
 		Version string
 	}
+	Route struct {
+		PAGE    string
+		HELP    string
+		SERVICE string
+	}
+	ServiceIP struct {
+		Prefix   string
+		PRIVACY  string
+		SIF2JSON string
+		CSV2JSON string
+	}
 }
 
 // NewCfg :

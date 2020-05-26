@@ -1,7 +1,18 @@
 Path = "/home/qmiao/go/src/github.com/cdutwhu/n3-frontend-test/config/config.toml"
-LogFile = "./[DATE].log"
+LogFile = "./N3-FRONTEND-TEST-[DATE].log"
 ServiceName = "N3-FRONTEND-TEST"
 
 [WebService]
   Port = 1320
   Version = "0.1.0"
+
+[Route]
+  PAGE = "/"
+  HELP = "/help"
+  SERVICE = "/service/"
+
+[ServiceIP]
+  Prefix = "N3"
+  PRIVACY = "192.168.31.168:1323"
+  SIF2JSON = "192.168.31.168:1324"
+  CSV2JSON = "192.168.31.168:1325"
