@@ -5,7 +5,6 @@ import (
 	"strings"
 	"sync"
 
-	glb "github.com/cdutwhu/n3-frontend-test/global"
 	cmn "github.com/cdutwhu/n3-util/common"
 )
 
@@ -26,19 +25,21 @@ var (
 	mustWriteFile = cmn.MustWriteFile
 	mapFromStruct = cmn.MapFromStruct
 	url1Value     = cmn.URL1Value
+	env2Struct    = cmn.Env2Struct
+	struct2Env    = cmn.Struct2Env
 )
 
-func initMutex() map[string]*sync.Mutex {
+func initMutex(route interface{}) map[string]*sync.Mutex {
 	mMtx := make(map[string]*sync.Mutex)
-	for _, v := range mapFromStruct(glb.Cfg.Route) {
+	for _, v := range mapFromStruct(route) {
 		mMtx[v.(string)] = &sync.Mutex{}
 	}
 	return mMtx
 }
 
-func initMapSrvIP() map[string]string {
+func initMapSrvIP(serviceIP interface{}) map[string]string {
 	mSrvIP := make(map[string]string)
-	for k, v := range mapFromStruct(glb.Cfg.ServiceIP) {
+	for k, v := range mapFromStruct(serviceIP) {
 		mSrvIP[k] = v.(string)
 	}
 	return mSrvIP

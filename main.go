@@ -3,15 +3,15 @@ package main
 import (
 	"os"
 
-	g "github.com/cdutwhu/n3-frontend-test/global"
+	cfg "github.com/cdutwhu/n3-frontend-test/config"
 	"github.com/cdutwhu/n3-frontend-test/host"
 	eg "github.com/cdutwhu/n3-util/n3errs"
 )
 
 func main() {
-	failOnErrWhen(!g.Init(), "%v: Global Config Init Error", eg.CFG_INIT_ERR)
+	failOnErrWhen(!cfg.InitEnvVarFromTOML("Cfg"), "%v: Config Init Error", eg.CFG_INIT_ERR)
 
-	cfg := g.Cfg
+	cfg := env2Struct("Cfg", &cfg.Config{}).(*cfg.Config)
 	ws, logfile, servicename := cfg.WebService, cfg.LogFile, cfg.ServiceName
 
 	os.Setenv("JAEGER_SERVICE_NAME", servicename)

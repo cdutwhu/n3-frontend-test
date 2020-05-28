@@ -1,0 +1,16 @@
+Path = ""
+LogFile = "./go-client-[DATE].log"
+ServiceName = "N3-SIF2JSON"
+
+[Server]
+  Protocol = "http"
+  IP = "192.168.31.168"
+  Port = 1324
+
+[Access]
+  Timeout = 3
+
+[Route]
+  HELP = "/"
+  SIF2JSON = "/sif2json/0.1.0"
+  JSON2SIF = "/json2sif/0.1.0"
