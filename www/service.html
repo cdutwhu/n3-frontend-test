@@ -21,7 +21,21 @@
     <script type="text/javascript" language="javascript">
         var script = document.createElement("script");
         script.type = "text/javascript";
+        script.src = "./js/help_local.js?v=" + (new Date()).getTime();
+        document.head.appendChild(script);  
+    </script>
+
+    <!-- <script type="text/javascript" language="javascript">
+        var script = document.createElement("script");
+        script.type = "text/javascript";
         script.src = "./js/test.js?v=" + (new Date()).getTime();
+        document.head.appendChild(script);  
+    </script> -->
+
+    <script type="text/javascript" language="javascript">
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src = "./js/test_local.js?v=" + (new Date()).getTime();
         document.head.appendChild(script);  
     </script>
 
@@ -32,6 +46,7 @@
     <br>
     <form>
         <input type="button" onclick="n3ms_help('privacy');" value="Help" />
+        <input type="button" onclick="n3ms_help_local('privacy');" value="Help" />
     </form>
     <form id="uploadform0">
         <code>JSON File:&nbsp;</code>
@@ -47,6 +62,7 @@
     <br>
     <form>
         <input type="button" onclick="n3ms_help('sif2json');" value="Help" />
+        <input type="button" onclick="n3ms_help_local('sif2json');" value="Help" />
     </form>
     <form id="uploadform1">
         <code>SIF/JSON File:&nbsp;</code>
@@ -62,6 +78,7 @@
     <br>
     <form>
         <input type="button" onclick="n3ms_help('csv2json');" value="Help" />
+        <input type="button" onclick="n3ms_help_local('csv2json');" value="Help" />
     </form>
     <form id="uploadform2">
         <code>CSV File:&nbsp;</code>

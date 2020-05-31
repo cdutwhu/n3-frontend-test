@@ -8,8 +8,8 @@ ServiceName = "N3-FRONTEND-TEST"
 
 [Route]
   PAGE = "/"
-  HELP = "/help"
-  SERVICE = "/service/"
+  HELP = "/help/"
+  UPLOAD = "/upload/"
 
 [ServiceIP]
   Prefix = "N3"

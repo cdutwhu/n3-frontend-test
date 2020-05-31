@@ -5,7 +5,6 @@
 function init(name) {
 
     var finput, info, btnSend, uploadform, fname;
-
     switch (name) {
         case "privacy":
             finput = document.getElementById('selectfile0');
@@ -65,18 +64,15 @@ function init(name) {
 
         var ip = location.host;
         var url = '';
-        var finput;
 
         switch (name) {
             case "privacy":
                 ip = '192.168.31.168:1323';
-                finput = document.getElementById('selectfile0')
                 url = 'http://' + ip + '/policy-service/0.1.0/enforce'
                 break;
 
             case "sif2json":
                 ip = '192.168.31.168:1324';
-                finput = document.getElementById('selectfile1')
                 if (fname.endsWith('.xml')) {
                     url = 'http://' + ip + '/sif2json/0.1.0'
                 } else if (fname.endsWith('.json')) {
@@ -86,7 +82,6 @@ function init(name) {
 
             case "csv2json":
                 ip = '192.168.31.168:1325';
-                finput = document.getElementById('selectfile2')
                 if (fname.endsWith('.csv')) {
                     url = 'http://' + ip + '/csv2json/0.1.0'
                 } else if (fname.endsWith('.json')) {
@@ -112,6 +107,7 @@ function init(name) {
         }).then((result) => {
             console.log('data:', result.data);
             console.log('info:', result.info);
+            console.log('empty:', result.empty);
             console.log('error:', result.error);
         }).catch((error) => {
             console.error('Error:', error);

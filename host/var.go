@@ -23,7 +23,7 @@ var (
 	warnOnErr     = cmn.WarnOnErr
 	failOnErr     = cmn.FailOnErr
 	mustWriteFile = cmn.MustWriteFile
-	mapFromStruct = cmn.MapFromStruct
+	struct2Map    = cmn.Struct2Map
 	url1Value     = cmn.URL1Value
 	env2Struct    = cmn.Env2Struct
 	struct2Env    = cmn.Struct2Env
@@ -31,7 +31,7 @@ var (
 
 func initMutex(route interface{}) map[string]*sync.Mutex {
 	mMtx := make(map[string]*sync.Mutex)
-	for _, v := range mapFromStruct(route) {
+	for _, v := range struct2Map(route) {
 		mMtx[v.(string)] = &sync.Mutex{}
 	}
 	return mMtx
@@ -39,14 +39,15 @@ func initMutex(route interface{}) map[string]*sync.Mutex {
 
 func initMapSrvIP(serviceIP interface{}) map[string]string {
 	mSrvIP := make(map[string]string)
-	for k, v := range mapFromStruct(serviceIP) {
+	for k, v := range struct2Map(serviceIP) {
 		mSrvIP[k] = v.(string)
 	}
 	return mSrvIP
 }
 
 type result struct {
-	Data  *string `json:"data"`
-	Info  string  `json:"info"`
-	Error string  `json:"error"`
+	Data  string `json:"data"`
+	Info  string `json:"info"`
+	Empty bool   `json:"empty"`
+	Error string `json:"error"`
 }
