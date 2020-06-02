@@ -68,7 +68,11 @@ func HTTPAsync() {
 			RetErrStr string
 		)
 
-		pvalues := c.QueryParams()
+		var (
+			pvalues = c.QueryParams()
+			ctx     = c.Request().Context()
+		)
+
 		_, service := url1Value(pvalues, 0, "service")
 
 		// dialog.Alert(service)
@@ -106,21 +110,24 @@ func HTTPAsync() {
 
 		switch service {
 		case "privacy", "PRIVACY", "Privacy":
-			RetStr, RetErr = cltPRI.DO(
+			RetStr, RetErr = cltPRI.DOwithTrace(
+				ctx,
 				"cfg-clt-privacy.toml",
 				"HELP",
 				cltPRI.Args{},
 			)
 
 		case "sif2json", "SIF2JSON":
-			RetStr, RetErr = cltS2J.DO(
+			RetStr, RetErr = cltS2J.DOwithTrace(
+				ctx,
 				"cfg-clt-sif2json.toml",
 				"HELP",
 				cltS2J.Args{},
 			)
 
 		case "csv2json", "CSV2JSON":
-			RetStr, RetErr = cltC2J.DO(
+			RetStr, RetErr = cltC2J.DOwithTrace(
+				ctx,
 				"cfg-clt-csv2json.toml",
 				"HELP",
 				cltC2J.Args{},
@@ -171,7 +178,11 @@ func HTTPAsync() {
 			SIFVer  string
 		)
 
-		pvalues := c.QueryParams()
+		var (
+			pvalues = c.QueryParams()
+			ctx     = c.Request().Context()
+		)
+
 		if ok, s := url1Value(pvalues, 0, "service"); ok {
 			Service = s
 		}
@@ -201,7 +212,8 @@ func HTTPAsync() {
 
 		switch Service {
 		case "privacy", "PRIVACY", "Privacy":
-			RetStr, RetErr = cltPRI.DO(
+			RetStr, RetErr = cltPRI.DOwithTrace(
+				ctx,
 				"cfg-clt-privacy.toml",
 				"Update",
 				cltPRI.Args{
@@ -214,7 +226,8 @@ func HTTPAsync() {
 			)
 
 		case "sif2json", "SIF2JSON":
-			RetStr, RetErr = cltS2J.DO(
+			RetStr, RetErr = cltS2J.DOwithTrace(
+				ctx,
 				"cfg-clt-sif2json.toml",
 				"SIF2JSON",
 				cltS2J.Args{
@@ -225,7 +238,8 @@ func HTTPAsync() {
 			)
 
 		case "csv2json", "CSV2JSON":
-			RetStr, RetErr = cltC2J.DO(
+			RetStr, RetErr = cltC2J.DOwithTrace(
+				ctx,
 				"cfg-clt-csv2json.toml",
 				"CSV2JSON",
 				cltC2J.Args{
