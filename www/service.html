@@ -28,68 +28,52 @@
     <!-- <script type="text/javascript" language="javascript">
         var script = document.createElement("script");
         script.type = "text/javascript";
-        script.src = "./js/test.js?v=" + (new Date()).getTime();
+        script.src = "./js/upload.js?v=" + (new Date()).getTime();
         document.head.appendChild(script);  
     </script> -->
 
     <script type="text/javascript" language="javascript">
         var script = document.createElement("script");
         script.type = "text/javascript";
-        script.src = "./js/test_local.js?v=" + (new Date()).getTime();
+        script.src = "./js/upload_local.js?v=" + (new Date()).getTime();
         document.head.appendChild(script);  
     </script>
 
 </head>
 
 <body>
-    ---------------------------- n3 privacy ----------------------------
-    <br>
+    <code class="title">-------- n3 privacy --------</code> <br>
     <form>
         <input type="button" onclick="n3ms_help('privacy');" value="Help" />
         <input type="button" onclick="n3ms_help_local('privacy');" value="Help" />
     </form>
-    <form id="uploadform0">
-        <code>JSON File:&nbsp;</code>
-        <br>
-        <input type="file" id="selectfile0" name="file">
-        <br>
-        <output id="info0"></output>
-        <input type="submit" id="pub0" value="Upload" disabled />
-        <div id="waiting0" class="waiting" hidden></div>
+    <form id="form_pri">
+        <input type="file" id="selfile_pri" name="file" accept=".json"> <br>
+        <input type="submit" value="Upload" /> <br>
     </form>
     <br>
-    ---------------------------- n3 sif2json ----------------------------
-    <br>
+    <code class="title">-------- n3 sif2json --------</code> <br>
     <form>
         <input type="button" onclick="n3ms_help('sif2json');" value="Help" />
         <input type="button" onclick="n3ms_help_local('sif2json');" value="Help" />
     </form>
-    <form id="uploadform1">
-        <code>SIF/JSON File:&nbsp;</code>
-        <br>
-        <input type="file" id="selectfile1" name="file">
-        <br>
-        <output id="info1"></output>
-        <input type="submit" id="pub1" value="Upload" disabled />
-        <div id="waiting1" class="waiting" hidden></div>
+    <form id="form_s2j">
+        <input type="file" id="selfile_s2j" name="file" accept=".json,.xml"> <br>
+        <input type="submit" value="SIF&lt;--&gt;JSON" />
     </form>
     <br>
-    ---------------------------- n3 csv2json ----------------------------
-    <br>
+    <code class="title">-------- n3 csv2json --------</code> <br>
     <form>
         <input type="button" onclick="n3ms_help('csv2json');" value="Help" />
         <input type="button" onclick="n3ms_help_local('csv2json');" value="Help" />
     </form>
-    <form id="uploadform2">
-        <code>CSV File:&nbsp;</code>
-        <br>
-        <input type="file" id="selectfile2" name="file">
-        <br>
-        <output id="info2"></output>
-        <input type="submit" id="pub2" value="Upload" disabled />
-        <div id="waiting2" class="waiting" hidden></div>
+    <form id="form_c2j">
+        <input type="file" id="selfile_c2j" name="file" accept=".json,.csv"> <br>
+        <input type="submit" value="CSV--&gt;JSON" />
     </form>
     <br>
+    ----------------------------
+    <output id="info"></output>
 </body>
 
 </html>

@@ -169,6 +169,7 @@ func HTTPAsync() {
 
 		var (
 			Service string
+			Fn      string
 			ToNATS  bool
 			Data    []byte
 			User    string
@@ -186,6 +187,9 @@ func HTTPAsync() {
 		if ok, s := url1Value(pvalues, 0, "service"); ok {
 			Service = s
 		}
+		if ok, fn := url1Value(pvalues, 0, "fn"); ok {
+			Fn = fn
+		}
 		if ok, n := url1Value(pvalues, 0, "tonats"); ok && n == "true" {
 			ToNATS = true
 		}
@@ -197,6 +201,9 @@ func HTTPAsync() {
 		}
 		if ok, rw := url1Value(pvalues, 0, "rw"); ok {
 			RW = rw
+		}
+		if ok, obj := url1Value(pvalues, 0, "object"); ok {
+			Object = obj
 		}
 		if ok, sv := url1Value(pvalues, 0, "sv"); ok {
 			SIFVer = sv
@@ -215,13 +222,14 @@ func HTTPAsync() {
 			RetStr, RetErr = cltPRI.DOwithTrace(
 				ctx,
 				"cfg-clt-privacy.toml",
-				"Update",
+				Fn,
 				cltPRI.Args{
 					Policy: Data,
 					User:   User,
 					Ctx:    Ctx,
 					RW:     RW,
 					Object: Object,
+					Data:   Data,
 				},
 			)
 
@@ -229,7 +237,7 @@ func HTTPAsync() {
 			RetStr, RetErr = cltS2J.DOwithTrace(
 				ctx,
 				"cfg-clt-sif2json.toml",
-				"SIF2JSON",
+				Fn,
 				cltS2J.Args{
 					Data:   Data,
 					Ver:    SIFVer,
@@ -241,7 +249,7 @@ func HTTPAsync() {
 			RetStr, RetErr = cltC2J.DOwithTrace(
 				ctx,
 				"cfg-clt-csv2json.toml",
-				"CSV2JSON",
+				Fn,
 				cltC2J.Args{
 					Data:   Data,
 					ToNATS: ToNATS,

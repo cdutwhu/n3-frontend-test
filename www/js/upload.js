@@ -4,27 +4,23 @@
 
 function init(name) {
 
-    var finput, info, btnSend, uploadform, fname;
+    var finput, form, fname;
+    var info = document.getElementById('info');
+
     switch (name) {
         case "privacy":
-            finput = document.getElementById('selectfile0');
-            info = document.getElementById('info0');
-            btnSend = document.getElementById('pub0');
-            uploadform = document.getElementById("uploadform0");
+            finput = document.getElementById('selfile_pri');
+            form = document.getElementById("form_pri");
             break;
 
         case "sif2json":
-            finput = document.getElementById('selectfile1');
-            info = document.getElementById('info1');
-            btnSend = document.getElementById('pub1');
-            uploadform = document.getElementById("uploadform1");
+            finput = document.getElementById('selfile_s2j');
+            form = document.getElementById("form_s2j");
             break;
 
         case "csv2json":
-            finput = document.getElementById('selectfile2');
-            info = document.getElementById('info2');
-            btnSend = document.getElementById('pub2');
-            uploadform = document.getElementById("uploadform2");
+            finput = document.getElementById('selfile_c2j');
+            form = document.getElementById("form_c2j");
             break;
 
         default:
@@ -42,24 +38,10 @@ function init(name) {
                 '</li>');
         }
         info.innerHTML = ('<ul>' + output.join('') + '</ul>');
-
         fname = files[0].name;
-        var disabled = !fname;
-        switch (name) {
-            case 'privacy':
-                disabled |= (!fname.endsWith('.json'))
-                break;
-            case 'sif2json':
-                disabled |= (!fname.endsWith('.xml') && !fname.endsWith('.json'))
-                break;
-            case 'csv2json':
-                disabled |= (!fname.endsWith('.csv') && !fname.endsWith('.json'))
-                break;
-        }
-        btnSend.disabled = disabled;
     });
 
-    uploadform.addEventListener('submit', function (e) {
+    form.addEventListener('submit', function (e) {
         e.preventDefault();  // avoid to execute the actual submit of the form
 
         var ip = location.host;
@@ -141,7 +123,7 @@ function init(name) {
         //     type: 'POST',
         //     method: 'POST',
         //     url: url,
-        //     data: formdata, // $("#uploadform").serialize(), // serializes the form's elements
+        //     data: formdata, // $("#form").serialize(), // serializes the form's elements
         //     cache: false,
         //     contentType: false,
         //     processData: false,

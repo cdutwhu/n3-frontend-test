@@ -1,27 +1,20 @@
-function init_local(name) {
-
-    var finput, info, btnSend, uploadform, fname;
+function init_upload(name) {
+    var finput, form;    
 
     switch (name) {
         case "privacy":
-            finput = document.getElementById('selectfile0');
-            info = document.getElementById('info0');
-            btnSend = document.getElementById('pub0');
-            uploadform = document.getElementById("uploadform0");
+            finput = document.getElementById('selfile_pri');
+            form = document.getElementById("form_pri");
             break;
 
         case "sif2json":
-            finput = document.getElementById('selectfile1');
-            info = document.getElementById('info1');
-            btnSend = document.getElementById('pub1');
-            uploadform = document.getElementById("uploadform1");
+            finput = document.getElementById('selfile_s2j');
+            form = document.getElementById("form_s2j");
             break;
 
         case "csv2json":
-            finput = document.getElementById('selectfile2');
-            info = document.getElementById('info2');
-            btnSend = document.getElementById('pub2');
-            uploadform = document.getElementById("uploadform2");
+            finput = document.getElementById('selfile_c2j');
+            form = document.getElementById("form_c2j");
             break;
 
         default:
@@ -38,29 +31,15 @@ function init_local(name) {
                 f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
                 '</li>');
         }
+        var info = document.getElementById('info');
         info.innerHTML = ('<ul>' + output.join('') + '</ul>');
-
-        fname = files[0].name;
-        var disabled = !fname;
-        switch (name) {
-            case 'privacy':
-                disabled |= (!fname.endsWith('.json'))
-                break;
-            case 'sif2json':
-                disabled |= (!fname.endsWith('.xml') && !fname.endsWith('.json'))
-                break;
-            case 'csv2json':
-                disabled |= (!fname.endsWith('.csv') && !fname.endsWith('.json'))
-                break;
-        }
-        btnSend.disabled = disabled;
     });
 
-    uploadform.addEventListener('submit', function (e) {
+    form.addEventListener('submit', function (e) {
         e.preventDefault();  // avoid to execute the actual submit of the form
         
-        var add_params = prompt("Enter additional parameters (&user= &ctx= &rw= | &sv= ...)", "");       
-        
+        var add_params = prompt("&fn=*&user=*&ctx=*&rw=*&object=* | &sv=* ...", "");   
+                
         fetch(
             'http://' + location.host + '/upload/?service=' + name + add_params, {
             method: 'POST',
@@ -81,7 +60,7 @@ function init_local(name) {
 }
 
 window.onload = function () {
-    init_local("privacy");
-    init_local("sif2json");
-    init_local("csv2json");
+    init_upload("privacy");
+    init_upload("sif2json");
+    init_upload("csv2json");
 }
