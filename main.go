@@ -11,8 +11,10 @@ import (
 func main() {
 	failOnErrWhen(!cfg.InitEnvVarFromTOML("Cfg"), "%v: Config Init Error", eg.CFG_INIT_ERR)
 
-	cfg := env2Struct("Cfg", &cfg.Config{}).(*cfg.Config)
-	ws, logfile, servicename := cfg.WebService, cfg.LogFile, cfg.ServiceName
+	ICfg, err := env2Struct("Cfg", &cfg.Config{})
+	failOnErr("%v", err)
+	Cfg := ICfg.(*cfg.Config)
+	ws, logfile, servicename := Cfg.WebService, Cfg.LogFile, Cfg.ServiceName
 
 	os.Setenv("JAEGER_SERVICE_NAME", servicename)
 	os.Setenv("JAEGER_SAMPLER_TYPE", "const")
