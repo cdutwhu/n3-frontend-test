@@ -42,9 +42,9 @@ func HTTPAsync() {
 	Cfg := ICfg.(*cfg.Config)
 	port := Cfg.WebService.Port
 	route := Cfg.Route
-	mMtx := initMutex(route)
+	mMtx := initMutex(&route)
 	// serviceIP := Cfg.ServiceIP
-	// mSrvIP := initMapSrvIP(serviceIP)
+	// mSrvIP := initMapSrvIP(&serviceIP)
 
 	// Server
 	defer e.Start(fSf(":%d", port))
