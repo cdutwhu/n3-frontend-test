@@ -7,9 +7,9 @@ import (
 
 	cfg "github.com/cdutwhu/n3-frontend-test/config"
 	eg "github.com/cdutwhu/n3-util/n3errs"
-	"github.com/labstack/echo"
 	"github.com/labstack/echo-contrib/jaegertracing"
-	"github.com/labstack/echo/middleware"
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	cltC2J "github.com/nsip/n3-csv2json/Server/go-client"
 	cltPRI "github.com/nsip/n3-privacy/Server/go-client"
 	cltS2J "github.com/nsip/n3-sif2json/Server/go-client"
@@ -116,7 +116,7 @@ func HTTPAsync() {
 				ctx,
 				"cfg-clt-privacy.toml",
 				"HELP",
-				cltPRI.Args{},
+				nil,
 			)
 
 		case "sif2json", "SIF2JSON":
@@ -124,7 +124,7 @@ func HTTPAsync() {
 				ctx,
 				"cfg-clt-sif2json.toml",
 				"HELP",
-				cltS2J.Args{},
+				nil,
 			)
 
 		case "csv2json", "CSV2JSON":
@@ -132,7 +132,7 @@ func HTTPAsync() {
 				ctx,
 				"cfg-clt-csv2json.toml",
 				"HELP",
-				cltC2J.Args{},
+				nil,
 			)
 
 		default:
@@ -225,7 +225,7 @@ func HTTPAsync() {
 				ctx,
 				"cfg-clt-privacy.toml",
 				Fn,
-				cltPRI.Args{
+				&cltPRI.Args{
 					Policy: Data,
 					User:   User,
 					Ctx:    Ctx,
@@ -240,7 +240,7 @@ func HTTPAsync() {
 				ctx,
 				"cfg-clt-sif2json.toml",
 				Fn,
-				cltS2J.Args{
+				&cltS2J.Args{
 					Data:   Data,
 					Ver:    SIFVer,
 					ToNATS: ToNATS,
@@ -252,7 +252,7 @@ func HTTPAsync() {
 				ctx,
 				"cfg-clt-csv2json.toml",
 				Fn,
-				cltC2J.Args{
+				&cltC2J.Args{
 					Data:   Data,
 					ToNATS: ToNATS,
 				},
