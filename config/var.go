@@ -4,7 +4,10 @@ import (
 	"fmt"
 	"strings"
 
-	cmn "github.com/cdutwhu/n3-util/common"
+	"github.com/cdutwhu/debog/fn"
+	"github.com/cdutwhu/gotil/net"
+	"github.com/cdutwhu/gotil/rflx"
+	"github.com/cdutwhu/n3-util/cfg"
 )
 
 var (
@@ -12,9 +15,10 @@ var (
 	fSf         = fmt.Sprintf
 	sReplaceAll = strings.ReplaceAll
 
-	failOnErr  = cmn.FailOnErr
-	localIP    = cmn.LocalIP
-	cfgRepl    = cmn.CfgRepl
-	struct2Env = cmn.Struct2Env
-	env2Struct = cmn.Env2Struct
+	failOnErr  = fn.FailOnErr
+	localIP    = net.LocalIP
+	cfgRepl    = cfg.Modify
+	gitver     = cfg.GitVer
+	struct2Env = rflx.Struct2Env
+	env2Struct = rflx.Env2Struct
 )

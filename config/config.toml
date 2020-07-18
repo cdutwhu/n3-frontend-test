@@ -4,7 +4,7 @@ ServiceName = "N3-FRONTEND-TEST"
 
 [WebService]
   Port = 1320
-  Version = "0.1.0"
+  Version = "v0.1.0"
 
 [Route]
   PAGE = "/"

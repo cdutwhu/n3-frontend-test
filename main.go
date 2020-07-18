@@ -11,9 +11,7 @@ import (
 func main() {
 	failOnErrWhen(!cfg.InitEnvVarFromTOML("Cfg"), "%v: Config Init Error", eg.CFG_INIT_ERR)
 
-	ICfg, err := env2Struct("Cfg", &cfg.Config{})
-	failOnErr("%v", err)
-	Cfg := ICfg.(*cfg.Config)
+	Cfg := env2Struct("Cfg", &cfg.Config{}).(*cfg.Config)
 	ws, logfile, servicename := Cfg.WebService, Cfg.LogFile, Cfg.ServiceName
 
 	os.Setenv("JAEGER_SERVICE_NAME", servicename)

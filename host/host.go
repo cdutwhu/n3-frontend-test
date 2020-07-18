@@ -17,7 +17,6 @@ import (
 
 // HTTPAsync : Host a HTTP Server
 func HTTPAsync() {
-
 	e := echo.New()
 	defer e.Close()
 
@@ -37,9 +36,7 @@ func HTTPAsync() {
 		AllowCredentials: true,
 	}))
 
-	ICfg, err := env2Struct("Cfg", &cfg.Config{})
-	failOnErr("%v", err)
-	Cfg := ICfg.(*cfg.Config)
+	Cfg := env2Struct("Cfg", &cfg.Config{}).(*cfg.Config)
 	port := Cfg.WebService.Port
 	route := Cfg.Route
 	mMtx := initMutex(&route)
@@ -49,13 +46,13 @@ func HTTPAsync() {
 	// Server
 	defer e.Start(fSf(":%d", port))
 
-	// ------------------------------------------------------------------------------------ //
+	// ------------------------------------------------------------- //
 
 	path := route.PAGE
 	e.File(path, "./www/service.html")
 	e.Static(path, "./www/")
 
-	// ------------------------------------------------------------------------------------ //
+	// ------------------------------------------------------------- //
 
 	path = route.HELP
 	e.GET(path, func(c echo.Context) error {
@@ -95,7 +92,7 @@ func HTTPAsync() {
 		// 	})
 		// }
 
-		// ------------------------------------------------------------------------ //
+		// ------------------------------------------------------------- //
 		// time.Sleep(40 * time.Millisecond)
 		// sp := jaegertracing.CreateChildSpan(c, "Child span for additional processing")
 		// sp.LogEvent("Test log")
@@ -103,15 +100,15 @@ func HTTPAsync() {
 		// sp.SetTag("Test tag", "New tag")
 		// time.Sleep(40 * time.Millisecond)
 		// sp.Finish()
-		// ------------------------------------------------------------------------ //
+		// ------------------------------------------------------------- //
 
 		// resp, err := http.Get(url)
 
 		// results := jaegertracing.TraceFunction(c, http.Get, url)
 		// resp := results[0].Interface().(*http.Response)
 
-		switch service {
-		case "privacy", "PRIVACY", "Privacy":
+		switch sToUpper(service) {
+		case "PRIVACY":
 			RetStr, RetErr = cltPRI.DOwithTrace(
 				ctx,
 				"cfg-clt-privacy.toml",
@@ -119,7 +116,7 @@ func HTTPAsync() {
 				nil,
 			)
 
-		case "sif2json", "SIF2JSON":
+		case "SIF2JSON":
 			RetStr, RetErr = cltS2J.DOwithTrace(
 				ctx,
 				"cfg-clt-sif2json.toml",
@@ -127,7 +124,7 @@ func HTTPAsync() {
 				nil,
 			)
 
-		case "csv2json", "CSV2JSON":
+		case "CSV2JSON":
 			RetStr, RetErr = cltC2J.DOwithTrace(
 				ctx,
 				"cfg-clt-csv2json.toml",
@@ -136,7 +133,7 @@ func HTTPAsync() {
 			)
 
 		default:
-			RetErr = warnOnErr("%v: %s", eg.PARAM_NOT_SUPPORTED, service)
+			_, RetErr = warnOnErr("%v: %s", eg.PARAM_NOT_SUPPORTED, service)
 			RetStat = http.StatusBadRequest
 			goto RET
 		}
@@ -259,7 +256,7 @@ func HTTPAsync() {
 			)
 
 		default:
-			RetErr = warnOnErr("%v: %s", eg.PARAM_NOT_SUPPORTED, Service)
+			_, RetErr = warnOnErr("%v: %s", eg.PARAM_NOT_SUPPORTED, Service)
 			RetStat = http.StatusBadRequest
 			goto RET
 		}

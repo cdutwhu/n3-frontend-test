@@ -1,4 +1,4 @@
-Path = ""
+Path = "/home/qmiao/go/src/github.com/cdutwhu/n3-frontend-test/config/cfg-clt-sif2json.toml"
 LogFile = "./go-client-[DATE].log"
 ServiceName = "N3-SIF2JSON"
 
@@ -12,5 +12,5 @@ ServiceName = "N3-SIF2JSON"
 
 [Route]
   HELP = "/"
-  SIF2JSON = "/sif2json/0.1.0"
-  JSON2SIF = "/json2sif/0.1.0"
+  SIF2JSON = "/sif2json/v0.2.1"
+  JSON2SIF = "/json2sif/v0.2.1"
